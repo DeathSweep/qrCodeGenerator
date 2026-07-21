@@ -3,192 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logo QR Generator</title>
+    <title>QR Generator by deathsweep</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
-        
-        body { font-family: 'Inter', system_ui, sans-serif; }
-        .title-font { font-family: 'Space Grotesk', sans-serif; }
-
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            background-color: #1e1e1e;
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <div class="max-w-4xl mx-auto py-12 px-6">
+<body class="text-zinc-200 min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-6xl mx-auto">
+        
         <!-- Header -->
-        <div class="text-center mb-10">
-            <div class="inline-flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg">
-                    <i class="fa-solid fa-qrcode"></i>
+        <div class="flex items-center gap-4 mb-8">
+            <div class="w-16 h-16 bg-[#0088cc] rounded-2xl flex flex-col items-center justify-center text-white shadow-lg p-2.5">
+                <div class="grid grid-cols-2 gap-1 w-full h-full">
+                    <div class="border-2 border-white rounded-md"></div>
+                    <div class="border-2 border-white rounded-md"></div>
+                    <div class="border-2 border-white rounded-md"></div>
+                    <div class="border-2 border-white rounded-md flex items-center justify-center text-[8px] font-bold">m.</div>
                 </div>
-                <h1 class="title-font text-5xl font-semibold tracking-tight text-gray-900">QRify</h1>
             </div>
-            <p class="text-xl text-gray-600">Generate beautiful QR codes with your custom logo</p>
+            <div>
+                <div class="flex items-baseline gap-2">
+                    <h1 class="text-3xl font-bold tracking-tight text-white">QR Generator</h1>
+                    <span class="text-zinc-400 text-xs font-normal">by deathsweep.</span>
+                </div>
+                <p class="text-zinc-400 text-xs italic mt-1">Generate quick and easy QR codes</p>
+            </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-10">
-            <!-- Input Panel -->
-            <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles text-indigo-500"></i>
-                    Create Your QR
-                </h2>
-                
-                <div class="space-y-8">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Destination URL</label>
-                        <input 
-                            type="text" 
-                            id="link" 
-                            value="https://example.com"
-                            placeholder="https://yourwebsite.com"
-                            class="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-indigo-500 text-lg"
-                        >
-                    </div>
+        <!-- Main Panels Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Left Panel: Form -->
+            <div class="bg-[#2d2d2d] rounded-3xl p-8 flex flex-col justify-between shadow-xl">
+                <div>
+                    <h2 class="text-2xl font-semibold mb-6 text-white">Let’s Start! :)</h2>
+                    
+                    <div class="space-y-5">
+                        <!-- Destination URL -->
+                        <div>
+                            <label class="block text-xs font-medium text-zinc-300 mb-2">Destination URL</label>
+                            <input id="url-input" 
+                                   type="text" 
+                                   placeholder=""
+                                   class="w-full bg-[#404040] text-white border-none rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                        </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Upload Logo</label>
-                        <div class="border-2 border-dashed border-gray-300 rounded-3xl p-8 hover:border-indigo-400 transition-colors">
-                            <div class="flex flex-col items-center justify-center text-center">
-                                <div id="preview" class="hidden w-24 h-24 mx-auto mb-4 rounded-2xl overflow-hidden border border-gray-200">
-                                    <img id="logo-preview" class="w-full h-full object-contain" alt="Logo preview">
+                        <!-- Upload Image -->
+                        <div>
+                            <label class="block text-xs font-medium text-zinc-300 mb-2">Upload Image</label>
+                            <div id="upload-area" 
+                                 class="bg-[#404040] border border-dashed border-zinc-500 hover:border-zinc-300 rounded-xl h-36 flex flex-col items-center justify-center cursor-pointer transition-colors relative overflow-hidden">
+                                <div id="upload-placeholder" class="text-center p-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-2 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v-4m0 0l4 4m-4-4l4-4m12 4v4m0 0l-4-4m4 4l-4 4" />
+                                    </svg>
+                                    <p class="text-zinc-300 text-xs font-medium">Click to upload or drag & drop</p>
+                                    <p class="text-[10px] text-zinc-400 mt-1">PNG, JPG, WEBP (max 5MB)</p>
                                 </div>
-                                
-                                <input type="file" id="imageInput" accept="image/*" class="hidden">
-                                <button 
-                                    onclick="document.getElementById('imageInput').click()"
-                                    class="px-6 py-3 bg-white border border-gray-300 hover:border-indigo-300 rounded-2xl text-sm font-medium text-gray-700 hover:text-indigo-600 flex items-center gap-2">
-                                    <i class="fa-solid fa-upload"></i>
-                                    Choose Logo Image
-                                </button>
-                                <p class="text-xs text-gray-500 mt-4">PNG, JPG, WebP • Recommended square logo</p>
+                                <input id="image-upload" type="file" accept="image/*" class="hidden">
+                                <img id="preview-logo" class="hidden max-h-28 rounded-lg object-contain">
                             </div>
                         </div>
-                    </div>
 
-                    <button 
-                        onclick="generateQR()"
-                        id="generateBtn"
-                        class="w-full gradient-bg text-white py-5 rounded-3xl font-semibold text-lg flex items-center justify-center gap-3 hover:shadow-xl transition-all active:scale-[0.97]">
-                        <i class="fa-solid fa-bolt"></i>
-                        GENERATE QR CODE
+                        <!-- Colors -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <div class="bg-[#404040] rounded-xl px-4 py-2.5 flex items-center justify-between cursor-pointer relative">
+                                    <span class="text-xs text-zinc-300 font-medium">Fill Color</span>
+                                    <input id="fill-color" type="color" value="#1667A6" class="w-6 h-6 rounded border-none bg-transparent cursor-pointer">
+                                </div>
+                                <input id="fill-hex" type="hidden" value="#1667A6">
+                            </div>
+                            <div>
+                                <div class="bg-[#404040] rounded-xl px-4 py-2.5 flex items-center justify-between cursor-pointer relative">
+                                    <span class="text-xs text-zinc-300 font-medium">Background Colour</span>
+                                    <input id="bg-color" type="color" value="#ffffff" class="w-6 h-6 rounded border-none bg-transparent cursor-pointer">
+                                </div>
+                                <input id="bg-hex" type="hidden" value="#ffffff">
+                            </div>
+                        </div>
+
+                        <!-- Checkbox -->
+                        <div class="flex items-center justify-center gap-2 pt-2">
+                            <input id="bg-fill" type="checkbox" class="w-4 h-4 accent-zinc-500 bg-zinc-700 border-none rounded">
+                            <label for="bg-fill" class="text-xs text-zinc-300 cursor-pointer">Image Background Fill</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <button onclick="generateQR()" 
+                        class="w-full bg-[#404040] hover:bg-[#4a4a4a] active:bg-[#383838] transition-colors text-white font-semibold py-3.5 rounded-xl text-sm shadow-md mt-6">
+                    Generate QR
+                </button>
+            </div>
+
+            <!-- Right Panel: Live Preview -->
+            <div class="bg-[#2d2d2d] rounded-3xl p-8 flex flex-col justify-between shadow-xl">
+                <div>
+                    <h2 class="text-2xl font-semibold mb-6 text-white">Live Preview</h2>
+                    
+                    <div id="preview-area" 
+                         class="bg-[#404040] rounded-2xl h-80 flex items-center justify-center relative overflow-hidden">
+                        
+                        <div id="qr-preview" class="hidden text-center p-4">
+                            <img id="qr-image" class="max-h-64 mx-auto rounded-xl shadow-lg object-contain" alt="QR Code Preview">
+                        </div>
+                        
+                        <div id="empty-preview" class="text-center text-zinc-500">
+                            <p class="text-sm">Your QR code will appear here</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="grid grid-cols-2 gap-4 mt-6">
+                    <button onclick="downloadQR()" 
+                            id="download-btn"
+                            class="w-full bg-[#404040] hover:bg-[#4a4a4a] transition-colors text-white font-semibold py-3.5 rounded-xl text-sm opacity-50 cursor-not-allowed" disabled>
+                        Download PNG
+                    </button>
+                    <button onclick="resetForm()" 
+                            class="w-full bg-[#404040] hover:bg-[#4a4a4a] transition-colors text-white font-semibold py-3.5 rounded-xl text-sm">
+                        Generate New
                     </button>
                 </div>
             </div>
 
-            <!-- Result Panel -->
-            <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-100 flex flex-col">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-6">Preview</h2>
-                
-                <div id="result" class="flex-1 flex items-center justify-center min-h-[380px] bg-gray-50 rounded-3xl border border-dashed border-gray-200 relative">
-                    <div id="empty-state" class="text-center">
-                        <div class="w-20 h-20 mx-auto mb-4 bg-white rounded-2xl shadow flex items-center justify-center text-4xl">📱</div>
-                        <p class="text-gray-400 font-medium">Your QR code will appear here</p>
-                    </div>
-
-                    <div id="qr-result" class="hidden flex-col items-center w-full">
-                        <div class="bg-white p-6 rounded-3xl shadow-inner">
-                            <img id="qr-image" class="max-w-[300px] rounded-2xl" alt="Generated QR Code">
-                        </div>
-                        
-                        <div class="mt-8 flex gap-4 w-full">
-                            <button 
-                                onclick="downloadQR()"
-                                class="flex-1 px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-semibold flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-download"></i>
-                                Download PNG
-                            </button>
-                            <button 
-                                onclick="resetForm()"
-                                class="flex-1 px-8 py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-2xl font-semibold">
-                                New QR
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
     <script>
         let currentQRUrl = null;
+        let logoBase64 = null;
 
-        // Logo preview
-        document.getElementById('imageInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(ev) {
-                    document.getElementById('logo-preview').src = ev.target.result;
-                    document.getElementById('preview').classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
+        // Sync inputs
+        const fillColor = document.getElementById('fill-color');
+        const fillHex = document.getElementById('fill-hex');
+        const bgColor = document.getElementById('bg-color');
+        const bgHex = document.getElementById('bg-hex');
+
+        fillColor.addEventListener('input', () => fillHex.value = fillColor.value.toUpperCase());
+        bgColor.addEventListener('input', () => bgHex.value = bgColor.value.toUpperCase());
+
+        // Image Upload
+        const uploadArea = document.getElementById('upload-area');
+        const imageUpload = document.getElementById('image-upload');
+        const previewLogo = document.getElementById('preview-logo');
+        const uploadPlaceholder = document.getElementById('upload-placeholder');
+
+        uploadArea.addEventListener('click', () => imageUpload.click());
+
+        imageUpload.addEventListener('change', (e) => {
+            if (e.target.files[0]) handleImage(e.target.files[0]);
         });
 
-        async function generateQR() {
-            const link = document.getElementById('link').value.trim();
-            const fileInput = document.getElementById('imageInput');
-            const file = fileInput.files[0];
-            const generateBtn = document.getElementById('generateBtn');
+        // Drag & Drop
+        uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('border-white'); });
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('border-white'));
+        uploadArea.addEventListener('drop', e => {
+            e.preventDefault();
+            uploadArea.classList.remove('border-white');
+            if (e.dataTransfer.files[0]) handleImage(e.dataTransfer.files[0]);
+        });
 
-            if (!link) {
-                alert("Please enter a valid URL");
+        function handleImage(file) {
+            if (file.size > 5 * 1024 * 1024) {
+                alert("Image is too large. Maximum size is 5MB.");
                 return;
             }
-            if (!file) {
-                alert("Please upload a logo image");
-                return;
-            }
-
-            generateBtn.disabled = true;
-            generateBtn.innerHTML = `
-                <svg class="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                </svg>
-                Generating...
-            `;
-
             const reader = new FileReader();
-            reader.onload = async function(e) {
-                try {
-                    const response = await fetch('/generate_qr', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ 
-                            link: link, 
-                            image: e.target.result 
-                        })
-                    });
+            reader.onload = (e) => {
+                logoBase64 = e.target.result;
+                previewLogo.src = logoBase64;
+                previewLogo.classList.remove('hidden');
+                uploadPlaceholder.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
 
-                    if (response.ok) {
-                        const blob = await response.blob();
-                        const url = URL.createObjectURL(blob);
-                        
-                        currentQRUrl = url;
-                        
-                        document.getElementById('empty-state').classList.add('hidden');
-                        document.getElementById('qr-result').classList.remove('hidden');
-                        document.getElementById('qr-image').src = url;
-                    } else {
-                        const errorData = await response.json().catch(() => ({}));
-                        alert(errorData.message || "Failed to generate QR Code");
-                    }
-                } catch (error) {
-                    console.error(error);
-                    alert("Error connecting to server. Please try again.");
-                } finally {
-                    generateBtn.disabled = false;
-                    generateBtn.innerHTML = `<i class="fa-solid fa-bolt"></i> GENERATE QR CODE`;
-                }
+        async function generateQR() {
+            const url = document.getElementById('url-input').value.trim();
+            if (!url) return alert("Please enter a Destination URL");
+
+            const payload = {
+                link: url,
+                image: logoBase64 || null,
+                fill_color: fillColor.value,
+                bg_color: bgColor.value,
+                bg_fill: document.getElementById('bg-fill').checked
             };
 
-            reader.readAsDataURL(file);
+            try {
+                const res = await fetch('/generate_qr', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    return alert(err.message || "Failed to generate QR");
+                }
+
+                const blob = await res.blob();
+                const imageUrl = URL.createObjectURL(blob);
+
+                document.getElementById('qr-image').src = imageUrl;
+                document.getElementById('qr-preview').classList.remove('hidden');
+                document.getElementById('empty-preview').classList.add('hidden');
+                
+                const downloadBtn = document.getElementById('download-btn');
+                downloadBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                downloadBtn.removeAttribute('disabled');
+
+                currentQRUrl = imageUrl;
+
+            } catch (err) {
+                console.error(err);
+                alert("Something went wrong. Please try again.");
+            }
         }
 
         function downloadQR() {
@@ -200,15 +239,18 @@
         }
 
         function resetForm() {
-            document.getElementById('qr-result').classList.add('hidden');
-            document.getElementById('empty-state').classList.remove('hidden');
+            document.getElementById('url-input').value = '';
+            logoBase64 = null;
+            previewLogo.classList.add('hidden');
+            uploadPlaceholder.classList.remove('hidden');
+            document.getElementById('qr-preview').classList.add('hidden');
+            document.getElementById('empty-preview').classList.remove('hidden');
+            
+            const downloadBtn = document.getElementById('download-btn');
+            downloadBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            downloadBtn.setAttribute('disabled', 'true');
             currentQRUrl = null;
         }
-
-        // Enter key support
-        document.getElementById('link').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') generateQR();
-        });
     </script>
 </body>
 </html>
